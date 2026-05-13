@@ -139,13 +139,13 @@ export function createCounter() {
  */
 export function getMemberCity(member) {
   // TODO
-  if (member == null) {
+  if (member == null || member == undefined) {
     return "unknown";
   }
-  if (member.address == null) {
+  if (member.address == "" || member.address == null) {
     return "no address";
   }
-  if (member.address.city == null) {
+  if (member.address.city == "" || member.address.city == null) {
     return "no city";
   }
   return member.address.city;
