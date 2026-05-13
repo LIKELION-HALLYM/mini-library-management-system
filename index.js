@@ -15,8 +15,13 @@
  */
 export function createBook(title, author, year) {
   // TODO
+  return {
+    title,
+    author,
+    year,
+    tags: []
+  };
 }
-
 /**
  * 주어진 book 객체의 얕은 복사본을 반환한다.
  * 원본 book의 title을 바꿔도 복사본에는 영향이 없어야 한다.
@@ -27,6 +32,7 @@ export function createBook(title, author, year) {
  */
 export function shallowCopyBook(book) {
   // TODO
+  return { ...book };
 }
 
 // ─────────────────────────────────────────────────────
@@ -48,6 +54,9 @@ export function shallowCopyBook(book) {
  */
 export function buildRefChain(section, shelf, book) {
   // TODO
+  section.next = shelf;
+  shelf.next = book;
+  return section;
 }
 
 /**
@@ -63,6 +72,9 @@ export function buildRefChain(section, shelf, book) {
  */
 export function cutChain(section) {
   // TODO
+  const shelf = section.next;
+  section.next = null;
+  return shelf;
 }
 
 // ─────────────────────────────────────────────────────
@@ -87,6 +99,23 @@ export function cutChain(section) {
  */
 export function createCounter() {
   // TODO
+  return {
+    count: 0,
+    increment() {
+      this.count += 1;
+      return this.count;
+    },
+    decrement() {
+      if (this.count <= 0) {
+        throw new Error("count cannot be negative");
+      }
+      this.count -= 1;
+      return this.count;
+    },
+    reset() {
+      this.count = 0;
+    }
+  };
 }
 
 // ─────────────────────────────────────────────────────
@@ -110,6 +139,16 @@ export function createCounter() {
  */
 export function getMemberCity(member) {
   // TODO
+  if (member == null || member == undefined) {
+    return "unknown";
+  }
+  if (member.address == "" || member.address == null) {
+    return "no address";
+  }
+  if (member.address.city == "" || member.address.city == null) {
+    return "no city";
+  }
+  return member.address.city;
 }
 
 /**
@@ -128,6 +167,7 @@ export function getMemberCity(member) {
  */
 export function getFirstGenre(member) {
   // TODO
+  return member?.preferences?.genres?.[0] ?? "장르 없음";
 }
 
 /**
@@ -141,4 +181,5 @@ export function getFirstGenre(member) {
  */
 export function notifyMember(member) {
   // TODO
+  return member?.notifyDue?.() ?? "알림 기능 없음";
 }
