@@ -14,8 +14,14 @@
  * 조건: tags는 반드시 빈 배열로 초기화할 것.
  */
 export function createBook(title, author, year) {
-  // TODO
+  return {
+    title,
+    author,
+    year,
+    tags: [],
+  };
 }
+
 
 /**
  * 주어진 book 객체의 얕은 복사본을 반환한다.
@@ -26,7 +32,9 @@ export function createBook(title, author, year) {
  * @returns {object}
  */
 export function shallowCopyBook(book) {
-  // TODO
+  return {
+    ...book,
+  }
 }
 
 // ─────────────────────────────────────────────────────
@@ -47,7 +55,10 @@ export function shallowCopyBook(book) {
  *   shelf.next   === book
  */
 export function buildRefChain(section, shelf, book) {
-  // TODO
+  section.next = shelf;
+  shelf.next = book;
+
+  return section;
 }
 
 /**
@@ -62,7 +73,10 @@ export function buildRefChain(section, shelf, book) {
  * @returns {object} 끊기 전의 shelf 객체
  */
 export function cutChain(section) {
-  // TODO
+  const oldShelf = section.next;
+  section.next = null;
+  
+  return oldShelf;
 }
 
 // ─────────────────────────────────────────────────────
@@ -86,7 +100,26 @@ export function cutChain(section) {
  * @returns {object}
  */
 export function createCounter() {
-  // TODO
+  return {
+    count: 0,
+
+    increment() {
+      this.count += 1;
+      return this.count;
+    },
+
+    decrement() {
+      if (this.count === 0) {
+    throw new Error('count cannot be negative');      }
+
+      this.count -= 1;
+      return this.count;
+    },
+
+    reset() {
+      this.count = 0;
+    },
+  };
 }
 
 // ─────────────────────────────────────────────────────
@@ -109,7 +142,13 @@ export function createCounter() {
  *        if/else, try-catch 사용 금지.
  */
 export function getMemberCity(member) {
-  // TODO
+  return (
+    member == null
+      ? 'unknown'
+      : member.address == null
+        ? 'no address'
+        : member.address.city ?? 'no city'
+  );
 }
 
 /**
@@ -127,7 +166,7 @@ export function getMemberCity(member) {
  * 조건: 옵셔널 체이닝(?.)과 nullish 병합(??)만 사용.
  */
 export function getFirstGenre(member) {
-  // TODO
+  return member?.preferences?.genres?.[0] ?? '장르 없음';
 }
 
 /**
@@ -140,5 +179,5 @@ export function getFirstGenre(member) {
  * @returns {*}
  */
 export function notifyMember(member) {
-  // TODO
+  return member?.notifyDue?.() ?? '알림 기능 없음';
 }
